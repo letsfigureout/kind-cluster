@@ -19,6 +19,5 @@ This script is specifically written to work on Linux but may require some minor 
 2. Execute the `create_kind_cluster.sh` script
 ```
 $ ./create_kind_cluster.sh
-
 ```
 
