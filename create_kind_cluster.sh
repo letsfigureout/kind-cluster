@@ -22,7 +22,8 @@ echo "Waiting for cluster to start ..."; sleep 30
 docker network connect "kind" "${regname}" || true
 
 # Install Weave CNI
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+#kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 
 # Install nginx ingress controller
 if [ $ingress == 'nginx' ]; then

@@ -6,6 +6,8 @@ containerdConfigPatches:
         endpoint = ["http://REGNAME:REGPORT"]
 networking:
     disableDefaultCNI: true
+    apiServerAddress: "192.168.0.30"
+    apiServerPort: 6443
 nodes:
 - role: control-plane
   kubeadmConfigPatches:
@@ -14,12 +16,25 @@ nodes:
     nodeRegistration:
       kubeletExtraArgs:
         node-labels: "ingress-ready=true"
+        authorization-mode: "AlwaysAllow"
   extraPortMappings:
-  - containerPort: 80 
+  - containerPort: 30080 
     hostPort: 80 
     protocol: TCP
-  - containerPort: 8443
-    hostPort: 8443
+  - containerPort: 443
+    hostPort: 443
     protocol: TCP
 - role: worker
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "node-role.kubernetes.io/node=true"
 - role: worker
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "node-role.kubernetes.io/node=true"
